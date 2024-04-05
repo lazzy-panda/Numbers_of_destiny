@@ -9,6 +9,8 @@ import './i18n';
 const App = () => {
     const [formData, setFormData] = useState(null);
     const logoNumber = numberOfFate(formData?.date);
+    const birthday = Number(formData?.date.split('-')[2]);
+    const birthDate = formData?.date;
     const handleSubmit = (data) => {
         setFormData(data);
     };
@@ -16,7 +18,6 @@ const App = () => {
     const handleReset = () => {
         setFormData(null);
     };
-
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
             <View style={styles.container}>
@@ -33,7 +34,8 @@ const App = () => {
                         <Results
                             name={formData.name}
                             surname={formData.surname}
-                            dateOfBirth={formData.dateOfBirth}
+                            birthday={birthday}
+                            birthDate={birthDate}
                             onReset={handleReset}
                             number={logoNumber}
                         />

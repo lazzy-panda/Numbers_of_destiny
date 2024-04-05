@@ -36,7 +36,7 @@ const Timeline = ({ranges, onPressPeriod, selectedPeriod}) => {
 const styles = StyleSheet.create({
     scrollView: {
         flexDirection: 'row',
-        padding: 20,
+        paddingVertical: 20,
     },
     container: {
         display: 'flex',

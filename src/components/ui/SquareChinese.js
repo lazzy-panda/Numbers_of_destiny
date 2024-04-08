@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const Square = ({ array }) => {
+const SquareChinese = ({ array }) => {
     const [cellContent, setCellContent] = useState({
         ones: '',
         twos: '',
@@ -51,19 +51,19 @@ const Square = ({ array }) => {
     return (
         <View style={styles.container}>
             <View style={styles.row}>
-                <View style={styles.cell}><Text style={styles.text}>{cellContent.threes.trim()}</Text></View>
-                <View style={styles.cell}><Text style={styles.text}>{cellContent.sixes.trim()}</Text></View>
-                <View style={styles.cell}><Text style={styles.text}>{cellContent.nines.trim()}</Text></View>
-            </View>
-            <View style={styles.row}>
-                <View style={styles.cell}><Text style={styles.text}>{cellContent.twos.trim()}</Text></View>
-                <View style={styles.cell}><Text style={styles.text}>{cellContent.fives.trim()}</Text></View>
-                <View style={styles.cell}><Text style={styles.text}>{cellContent.eights.trim()}</Text></View>
-            </View>
-            <View style={styles.row}>
-                <View style={styles.cell}><Text style={styles.text}>{cellContent.ones.trim()}</Text></View>
                 <View style={styles.cell}><Text style={styles.text}>{cellContent.fours.trim()}</Text></View>
+                <View style={styles.cell}><Text style={styles.text}>{cellContent.nines.trim()}</Text></View>
+                <View style={styles.cell}><Text style={styles.text}>{cellContent.twos.trim()}</Text></View>
+            </View>
+            <View style={styles.row}>
+                <View style={styles.cell}><Text style={styles.text}>{cellContent.threes.trim()}</Text></View>
+                <View style={styles.cell}><Text style={styles.text}>{cellContent.fives.trim()}</Text></View>
                 <View style={styles.cell}><Text style={styles.text}>{cellContent.sevens.trim()}</Text></View>
+            </View>
+            <View style={styles.row}>
+                <View style={styles.cell}><Text style={styles.text}>{cellContent.eights.trim()}</Text></View>
+                <View style={styles.cell}><Text style={styles.text}>{cellContent.ones.trim()}</Text></View>
+                <View style={styles.cell}><Text style={styles.text}>{cellContent.sixes.trim()}</Text></View>
             </View>
         </View>
     );
@@ -87,13 +87,14 @@ const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
         justifyContent: 'center',
+        padding: 5
     },
     text: {
         fontFamily: 'Cochin',
-        fontSize: 15,
+        fontSize: 16,
         fontWeight: 'bold',
         color: '#fff9d8',
     }
 });
 
-export default Square;
+export default SquareChinese;

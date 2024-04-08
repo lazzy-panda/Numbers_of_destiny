@@ -34,6 +34,7 @@ const App = () => {
                         <Results
                             name={formData.name}
                             surname={formData.surname}
+                            middlename={formData.middlename}
                             birthday={birthday}
                             birthDate={birthDate}
                             onReset={handleReset}

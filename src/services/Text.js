@@ -1,5 +1,4 @@
-export const personalYearNumber = calculatePersonalYear(birthDate); // Assuming this function is defined as before
-export const personalYearDescription = getPersonalYearDescription(personalYearNumber);
+
 export const getMainDescription = (number) => {
     switch (number) {
         case 1:
@@ -279,3 +278,53 @@ export const generateNineYearPeriods = (destinyNumber) => {
     }
     return periods;
 }
+
+export const missingNameNumbers =  (array) => {
+    const allNumbers = Array.from({length: 9}, (_, i) => i + 1);
+    const presentNumbers = new Set(array);
+    return  allNumbers
+        .filter(number => !presentNumbers.has(number))
+        .map(number => `missingNameNumber_${number}`);
+};
+
+export const normalCountNameNumbers = (array) => {
+    // Считаем, сколько раз каждое число встречается в массиве
+    const countMap = array.reduce((acc, val) => {
+        acc[val] = (acc[val] || 0) + 1;
+        return acc;
+    }, {});
+
+    // Находим медианное значение встречаемости чисел
+    const counts = Object.values(countMap);
+    const medianCount = counts.length % 2 === 0 ?
+        (counts[counts.length / 2 - 1] + counts[counts.length / 2]) / 2 :
+        counts[Math.floor(counts.length / 2)];
+
+    // Фильтруем числа, чья встречаемость близка к медиане
+    return Object.keys(countMap)
+        .filter(number => {
+            const deviation = Math.abs(countMap[number] - medianCount);
+            // Предположим, что разумное количество — это отклонение не более чем на 1 от медианы
+            return deviation <= 1;
+        })
+        .map(number => `normalNameNumber_${number}`);
+};
+
+export const redundantCountNameNumbers = (array) => {
+    // Считаем, сколько раз каждое число встречается в массиве
+    const countMap = array.reduce((acc, val) => {
+        acc[val] = (acc[val] || 0) + 1;
+        return acc;
+    }, {});
+
+    // Находим медианное значение встречаемости чисел
+    const counts = Object.values(countMap).sort((a, b) => a - b);
+    const medianCount = counts.length % 2 === 0 ?
+        (counts[counts.length / 2 - 1] + counts[counts.length / 2]) / 2 :
+        counts[Math.floor(counts.length / 2)];
+
+    // Фильтруем числа, чья встречаемость значительно выше медианы
+    return Object.keys(countMap)
+        .filter(number => countMap[number] > medianCount + 1) // Предположим, что избыток — это когда встречаемость на 2 и более больше медианы
+        .map(number => `redundantNumber_${number}`);
+};

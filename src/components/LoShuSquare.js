@@ -2,10 +2,12 @@ import React from 'react';
 import {Text, Pressable, View} from 'react-native';
 import Square from './ui/Square';
 import {
+    chineseMissingPatterns,
+    chinesePatterns,
     getLinesBasedOnMissingNumbers,
     getMultipleLineDescriptions,
     getSquareNumbersDescription,
-    missingFigures
+    missingFigures, pythagorMissingPatterns, pythagorPatterns
 } from '../services/Text';
 import {useTranslation} from 'react-i18next';
 import {styles} from '../styles';
@@ -13,7 +15,12 @@ import SquareChinese from './ui/SquareChinese';
 
 const LoShuSquare = ({birthDate}) => {
     const {t, i18n} = useTranslation();
-    const strengthLines = getMultipleLineDescriptions(birthDate.split('').map(Number));
+    const strengthLinesPythagor = getMultipleLineDescriptions(birthDate.split('').map(Number), pythagorPatterns);
+    const strengthLinesChinese = getMultipleLineDescriptions(birthDate.split('').map(Number), chinesePatterns);
+    const strengthLines = strengthLinesPythagor.concat(strengthLinesChinese)
+    const weaknessLinesPythagor = getLinesBasedOnMissingNumbers(birthDate.split('').map(Number), pythagorMissingPatterns)
+    const weaknessLinesChinese = getLinesBasedOnMissingNumbers(birthDate.split('').map(Number), chineseMissingPatterns)
+    const weakLines = weaknessLinesPythagor.concat(weaknessLinesChinese)
     return (
         <View style={styles.textContainer}>
             <Pressable onPress={() => {}}>
@@ -51,15 +58,18 @@ const LoShuSquare = ({birthDate}) => {
                     </View>
                 )}
 
-
-                <Text style={[styles.tabHeader, {marginTop: 40}]}>
-                    {t('lines_of_weakness')}</Text>
-                {
-                    getLinesBasedOnMissingNumbers(birthDate.split('').map(Number)).map((descKey, index) => (
-                        <Text key={index} style={styles.text}>
-                            {t(descKey)}
-                        </Text>))
-                }
+                {weakLines[0] !== 'no_specific_line_detected' && (
+                    <View>
+                        <Text style={[styles.tabHeader, {marginTop: 40}]}>
+                            {t('lines_of_weakness')}</Text>
+                        {weakLines.map((descKey, index) => (
+                            <Text key={index} style={styles.text}>
+                                {t(descKey)}
+                            </Text>
+                        ))
+                        }
+                    </View>
+                )}
             </Pressable>
         </View>
     )

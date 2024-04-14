@@ -1,3 +1,50 @@
+export const pythagorPatterns = {
+    '159': "the_line_of_determination",
+    '357': "the_line_of_compassion",
+    '369': "the_line_of_mind",
+    '258': "the_line_of_emotional_balance",
+    '147': "the_line_of_practicality",
+    '123': "planning_line",
+    '456': "the_line_of_willpower",
+    '789': "activity_line",
+};
+
+export const chinesePatterns = {
+    '258': "the_line_of_determination",
+    '357': "the_line_of_compassion",
+    '249': "the_line_of_mind",
+    '456': "the_line_of_emotional_balance",
+    '147': "the_line_of_practicality",
+    '348': "planning_line",
+    '159': "the_line_of_willpower",
+    '267': "activity_line",
+    '13': "the_line_of_details_and_tricks",
+    '39': "the_line_of_the_trial",
+    '79': "the_line_of_peace_of_mind",
+    '17': "the_line_of_science"
+};
+
+export const pythagorMissingPatterns = {
+    '159': "the_line_of_determination",
+    '357': "the_line_of_skepticism",
+    '369': "the_line_of_bad_memory",
+    '258': "the_line_of_emotional_sensitivity",
+    '147': "the_line_of_impracticality",
+    '123': "planning_line",
+    '456': "the_line_of_disappointments",
+    '789': "the_line_of_doubt",
+};
+
+export const chineseMissingPatterns = {
+    '258': "the_line_of_disappointments",
+    '357': "the_line_of_loneliness",
+    '249': "the_line_of_bad_memory",
+    '456': "the_line_of_suspicion",
+    '348': "the_line_of_confusion",
+    '168': "the_line_of_failures",
+    '159': "the_line_of_indecision",
+    '267': "The_line_of_indifference",
+};
 
 export const getMainDescription = (number) => {
     switch (number) {
@@ -143,24 +190,13 @@ export const missingFigures = (array) => {
     return missingDescriptions;
 };
 
-export const getMultipleLineDescriptions = (array) => {
+
+export const getMultipleLineDescriptions = (array, patterns) => {
     // Filter out invalid numbers and remove duplicates
     const validNumbers = Array.from(new Set(array.filter(num => num >= 1 && num <= 9)));
 
     // Sort the numbers to ensure the sequence can match patterns
     const sortedKey = validNumbers.sort().join('');
-
-    // Define patterns for each line
-    const patterns = {
-        '159': "the_line_of_determination",
-        '357': "the_line_of_compassion",
-        '369': "the_line_of_mind",
-        '258': "the_line_of_emotional_balance",
-        '147': "the_line_of_practicality",
-        '123': "planning_line",
-        '456': "the_line_of_willpower",
-        '789': "activity_line",
-    };
 
     // Array to hold all detected lines
     let detectedLines = [];
@@ -176,23 +212,12 @@ export const getMultipleLineDescriptions = (array) => {
     return detectedLines.length > 0 ? detectedLines : ["no_specific_line_detected"];
 };
 
-export const getLinesBasedOnMissingNumbers = (array) => {
+export const getLinesBasedOnMissingNumbers = (array, patterns) => {
     // Filter out invalid numbers and remove duplicates
     const validNumbers = Array.from(new Set(array.filter(num => num >= 1 && num <= 9)));
 
     // Convert the array to a Set for efficient presence checks
     const numbersPresent = new Set(validNumbers);
-
-    // Define patterns for lines based on missing numbers with keys as identifiers
-    const patterns = {
-        '159': "the_line_of_indecision",
-        '357': "the_line_of_skepticism",
-        '369': "the_line_of_bad_memory",
-        '258': "the_line_of_emotional_sensitivity",
-        '147': "the_line_of_impracticality",
-        '456': "the_line_of_disappointments",
-        '789': "the_line_of_doubt",
-    };
 
     // Array to hold all detected line keys based on missing numbers
     let detectedLineKeys = [];

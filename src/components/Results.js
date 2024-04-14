@@ -13,7 +13,6 @@ import PlainDescription from './PlainDescription';
 import LoShuSquare from './LoShuSquare';
 import Future from './Future';
 import {styles} from '../styles';
-import {analyzeName} from '../services/calculations'
 import NameMap from './NameMap';
 
 const Results = ({name, surname, middlename,  onReset, number, birthday, birthDate}) => {

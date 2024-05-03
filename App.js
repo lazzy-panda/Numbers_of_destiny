@@ -1,10 +1,12 @@
-import React, {useState, useEffect} from 'react';
-import {View, Text, StyleSheet, Image, Keyboard, TouchableWithoutFeedback, Pressable} from 'react-native';
+import React, {useState} from 'react';
+import {View, StyleSheet, Image, Keyboard, TouchableWithoutFeedback, Pressable} from 'react-native';
 import Form from './src/components/Form';
 import Logo from './src/components/Logo';
 import Results from './src/components/Results';
 import {numberOfFate} from './src/services/calculations';
+
 import './i18n';
+import Background from "./src/components/ui/Background";
 
 const App = () => {
     const [formData, setFormData] = useState(null);
@@ -21,7 +23,6 @@ const App = () => {
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
             <View style={styles.container}>
-
                 <Image style={styles.background} source={require('./assets/background.png')}/>
                 <Image style={styles.bottomImage} source={require('./assets/image_bottom.png')}/>
                 <Image style={styles.topImage} source={require('./assets/image_top.png')}/>
@@ -35,6 +36,7 @@ const App = () => {
                             name={formData.name}
                             surname={formData.surname}
                             middlename={formData.middlename}
+                            sex={formData.sex}
                             birthday={birthday}
                             birthDate={birthDate}
                             onReset={handleReset}

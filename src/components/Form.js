@@ -4,26 +4,28 @@ import RNPickerSelect from 'react-native-picker-select';
 import Button from './ui/Button';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import IconButton from './ui/IconButton';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 
 const Form = ({onSubmit}) => {
-    const { t, i18n } = useTranslation();
+    const {t, i18n} = useTranslation();
     const [name, setName] = useState('');
     const [surname, setSurname] = useState('');
     const [middlename, setMiddlename] = useState('');
     const [day, setDay] = useState('');
     const [month, setMonth] = useState('');
     const [year, setYear] = useState('');
-    const isFormComplete = name && surname && middlename && day && month && year;
+    const [sex, setSex] = useState('');
+    const isFormComplete = name && surname && middlename && day && month && year && sex;
 
     useEffect(() => {
         const loadFormData = async () => {
             const savedData = await AsyncStorage.getItem('formData');
             if (savedData) {
-                const {name, surname, middlename, date} = JSON.parse(savedData);
+                const {name, surname, middlename, date, sex} = JSON.parse(savedData);
                 setName(name || '');
                 setSurname(surname || '');
                 setMiddlename(middlename || '');
+                setSex(sex || '');
                 if (date) {
                     const [y, m, d] = date.split('-');
                     setYear(y);
@@ -37,9 +39,9 @@ const Form = ({onSubmit}) => {
 
     const handleSubmit = async () => {
         const date = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
-        const formData = {name, surname, middlename, date};
+        const formData = {name, surname, middlename, date, sex};
         await AsyncStorage.setItem('formData', JSON.stringify(formData));
-        onSubmit({name, surname, middlename, date});
+        onSubmit({name, surname, middlename, date, sex});
     };
 
     const handleClearForm = async () => {
@@ -50,11 +52,22 @@ const Form = ({onSubmit}) => {
         setDay('');
         setMonth('');
         setYear('');
-
+        setSex('');
         // Clear stored data
         await AsyncStorage.removeItem('formData');
     };
-
+    const sexes = () => {
+        return [
+            {
+                label: t('male'),
+                value: 'male'
+            },
+            {
+                label: t('female'),
+                value: 'female'
+            }
+        ]
+    }
     const years = () => {
         const startYear = 1960;
         const currentYear = new Date().getFullYear();
@@ -136,6 +149,13 @@ const Form = ({onSubmit}) => {
                     items={years()}
                     value={year}
                 />
+                <RNPickerSelect
+                    onValueChange={(value) => setSex(value)}
+                    style={pickerSelectStyles}
+                    placeholder={{label: t("sex"), value: null}}
+                    items={sexes()}
+                    value={sex}
+                />
             </View>
             <View style={styles.buttonsContainer}>
                 <Button onclick={handleSubmit} text={t('calculate')} disabled={!isFormComplete}/>
@@ -187,7 +207,7 @@ const styles = StyleSheet.create({
 
 const pickerSelectStyles = StyleSheet.create({
     inputIOS: {
-        width: 100,
+        width: 75,
         height: 50,
         borderColor: borderColor,
         borderWidth: 1,

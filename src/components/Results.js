@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, Pressable, ScrollView} from 'react-native';
+import {View, ScrollView} from 'react-native';
 import Button from './ui/Button';
 import {useTranslation} from 'react-i18next';
 import {
@@ -14,8 +14,10 @@ import LoShuSquare from './LoShuSquare';
 import Future from './Future';
 import {styles} from '../styles';
 import NameMap from './NameMap';
+import ManMap from "./ui/ManMap";
+import WomanMap from "./ui/WomanMap";
 
-const Results = ({name, surname, middlename,  onReset, number, birthday, birthDate}) => {
+const Results = ({name, surname, middlename, onReset, number, birthday, birthDate, sex}) => {
     const {t, i18n} = useTranslation();
     const [activeSection, setActiveSection] = useState(null);
     const ranges = ["period_1", "period_2", "period_3", "period_4", "period_5"];
@@ -30,9 +32,17 @@ const Results = ({name, surname, middlename,  onReset, number, birthday, birthDa
 
     const personalYearNumber = calculatePersonalYear(birthDate);
     const personalYearDescription = getPersonalYearDescription(personalYearNumber);
+    const sumOfBirthday = birthday.toString()?.split('').reduce(
+        (accumulator, currentValue) => Number(accumulator) + Number(currentValue),
+        0,
+    );
 
     return (
         <ScrollView style={styles.scrollView} contentContainerStyle={{paddingBottom: 20}}>
+            {
+                sex === 'male' ? <ManMap number={number} birthDay={birthday} sumOfBirthday={sumOfBirthday}/> : <WomanMap number={number} birthDay={birthday} sumOfBirthday={sumOfBirthday}/>
+            }
+            {/*<ManMap number={number} birthDay={birthday}/>*/}
             <View style={styles.container}>
                 {/* Accordion Section 1 */}
                 <TabHeader

@@ -9,16 +9,9 @@ const Logo = ({numberOfFate}) => {
     ];
 
     if (typeof numberOfFate !== 'undefined' && numberOfFate !== null) {
-        return (
-            <View style={styles.fateContainer}>
-                <ImageBackground style={logoStyle} source={require('../../assets/little_stars.png')}>
-                    <Text style={styles.fateNumber}>{numberOfFate}</Text>
-                </ImageBackground>
-            </View>
-        );
+        return null
     }
 
-    // Default content if numberOfFate is not provided or null
     return (
         <>
             <Image style={logoStyle} source={require('../../assets/logo.png')} />
